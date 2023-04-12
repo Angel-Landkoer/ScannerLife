@@ -1,11 +1,10 @@
 import { Alert, Button, StyleSheet, Text, View } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { useDispatch } from "react-redux";
 import { addCard } from "../store/actions/card.action";
 
 export function Scanner() {
-  const [counterKey, setCounterKey] = useState(0);
   const [hasPermission, setHasPermission] = useState(false);
   const [scanner, setScanner] = useState(false);
   const [permissionResponse, requestPermission] =
@@ -15,10 +14,6 @@ export function Scanner() {
 
   // usePermissions:  {"canAskAgain": true, "expires": "never", "granted": true, "status": "granted"}
   // usePermissions:  {"canAskAgain": true, "expires": "never", "granted": false, "status": "denied"}
-
-  useEffect(() => {
-    setCounterKey(counterKey + 1);
-  }, [hasPermission, scanner, permissionResponse]);
 
   const verifyPerssiion = async () => {
     console.log("permissionResponse.status: ", permissionResponse.status);
@@ -32,6 +27,11 @@ export function Scanner() {
       setHasPermission(true);
       setScanner(true);
     }
+  };
+
+  const handleOverAgain = () => {
+    setScanner(!scanner);
+    console.log(scanner);
   };
 
   const handleScanner = ({ type, data, target }) => {
@@ -57,13 +57,7 @@ export function Scanner() {
       />
       {hasPermission ? (
         <View style={contentBtnActive}>
-          <Button
-            title="Tap to Scan Again"
-            onPress={() => {
-              setScanner(!scanner);
-              console.log(scanner);
-            }}
-          />
+          <Button title="Tap to Scan Again" onPress={handleOverAgain} />
         </View>
       ) : (
         <View style={contentBtnActive}>
