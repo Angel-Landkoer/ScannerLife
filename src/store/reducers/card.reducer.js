@@ -7,7 +7,10 @@ const initialState = {
 
 export const reducer = (state = initialState, action) => {
   if (action.type == ADD_CARD) {
-    return { ...state, cards: [...state.cards, action.card], sizeCard: state.cards.length }
+
+    const newCard = [...state.cards, action.card]
+
+    return { ...state, cards: newCard, sizeCard: newCard.length }
   }
 
   if (action.type == DELETED_CARD) {
@@ -20,7 +23,7 @@ export const reducer = (state = initialState, action) => {
     return { ...state, cards: filterCard, sizeCard: filterCard.length }
   }
 
-  if (action.type == DELETED_ALL_CARD) return { ...state, cards: [], sizeCard: state.cards.length }
+  if (action.type == DELETED_ALL_CARD) return { ...state, cards: [], sizeCard: 0 }
 
   return state
 }
