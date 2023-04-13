@@ -12,9 +12,6 @@ export function Scanner() {
 
   const dispatch = useDispatch();
 
-  // usePermissions:  {"canAskAgain": true, "expires": "never", "granted": true, "status": "granted"}
-  // usePermissions:  {"canAskAgain": true, "expires": "never", "granted": false, "status": "denied"}
-
   const verifyPerssiion = async () => {
     console.log("permissionResponse.status: ", permissionResponse.status);
     if (permissionResponse.status !== "granted") {
@@ -31,7 +28,6 @@ export function Scanner() {
 
   const handleOverAgain = () => {
     setScanner(!scanner);
-    console.log(scanner);
   };
 
   const handleScanner = ({ type, data, target }) => {
@@ -43,6 +39,7 @@ export function Scanner() {
     };
 
     dispatch(addCard(dataSave));
+    Alert.alert("Scanned!");
   };
 
   return (
@@ -50,11 +47,13 @@ export function Scanner() {
       <Text style={{ marginBottom: 20 }}>
         {hasPermission ? "" : "You don't have permission"}
       </Text>
-      <BarCodeScanner
-        onBarCodeScanned={!hasPermission ? undefined : handleScanner}
-        key={counterKey}
-        style={styleScanner}
-      />
+      {hasPermission && (
+        <BarCodeScanner
+          key={"scanner"}
+          onBarCodeScanned={!scanner ? undefined : handleScanner}
+          style={styleScanner}
+        />
+      )}
       {hasPermission ? (
         <View style={contentBtnActive}>
           <Button title="Tap to Scan Again" onPress={handleOverAgain} />
@@ -91,18 +90,3 @@ const styles = StyleSheet.create({
 });
 
 const { container, styleScanner, contentBtnActive } = styles;
-
-// useEffect(() => {
-//   (async () => {
-//     const { status } = await BarCodeScanner.requestPermissionsAsync();
-
-//     if (status !== "granted") {
-//       Alert.alert("Sorry, it is necessaty to lend the permission");
-//     }
-
-//     if (status == "granted") {
-//       setHasPermission(true);
-//       setScanner(true);
-//     }
-//   })();
-// }, [hasPermission]);
