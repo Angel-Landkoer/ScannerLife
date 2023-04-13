@@ -4,7 +4,7 @@
 	- [Supported formats](https://docs.expo.dev/versions/latest/sdk/bar-code-scanner/#supported-formats "Supported formats")
 
 ---
-##Wireframe
+## Wireframe
 ------------
 
 - [ScannerLife](https://whimsical.com/scannerlife-9MRHBz3KBs2UEBSRUJAS7V "ScannerLife")
