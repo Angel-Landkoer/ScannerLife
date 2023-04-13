@@ -13,7 +13,6 @@ export function Scanner() {
   const dispatch = useDispatch();
 
   const verifyPerssiion = async () => {
-    console.log("permissionResponse.status: ", permissionResponse.status);
     if (permissionResponse.status !== "granted") {
       Alert.alert("Sorry, it is necessaty to lend the permission");
       const request = await requestPermission();
